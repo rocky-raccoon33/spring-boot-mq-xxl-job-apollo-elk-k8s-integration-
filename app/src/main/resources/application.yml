@@ -10,15 +10,17 @@ spring:
   jpa:
     show-sql: true
     properties:
-      hibernate:
+      hibernate:`
         show-sql: true
     hibernate:
       ddl-auto: update
+  rabbitmq:
+    
 
 xxl:
   job:
     admin:
-      address: http://xxl-job-admin/xxl-job-admin
+      address:
     accessToken:
     executor:
       ip:
@@ -32,7 +34,7 @@ app:
   id: alpha
 
 apollo:
-  meta: service-apollo-meta-server-dev.sre
+  meta:
   cluster: default
   bootstrap:
     enabled: true

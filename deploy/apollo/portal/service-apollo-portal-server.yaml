@@ -61,8 +61,7 @@ metadata:
   labels:
     app: deployment-apollo-portal-server
 spec:
-  # 2 个实例
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: pod-apollo-portal-server
