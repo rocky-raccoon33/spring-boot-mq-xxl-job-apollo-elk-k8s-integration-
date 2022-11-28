@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.example</groupId>
     <artifactId>alpha</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>alpha</name>
     <description>alpha</description>
     <packaging>pom</packaging>
@@ -16,17 +16,11 @@
     </dependencies>
 
     <modules>
-        <module>library</module>
+        <module>lib</module>
         <module>web</module>
+        <module>mq</module>
+        <module>core</module>
+        <module>app</module>
     </modules>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

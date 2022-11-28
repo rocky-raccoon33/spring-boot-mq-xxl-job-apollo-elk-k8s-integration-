@@ -1,2 +1,43 @@
 server:
-  port: 8090
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/alpha
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: maurice
+    password: martha__
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        show-sql: true
+    hibernate:
+      ddl-auto: update
+
+xxl:
+  job:
+    admin:
+      address: http://xxl-job-admin/xxl-job-admin
+    accessToken:
+    executor:
+      ip:
+      logpath:
+      logretentiondays: 30
+      address:
+      port: 8090
+      appname: alpha
+
+app:
+  id: alpha
+
+apollo:
+  meta: service-apollo-meta-server-dev.sre
+  cluster: default
+  bootstrap:
+    enabled: true
+    namespaces: application,application.yml
+    eagerLoad:
+      enabled: false
+  
+  

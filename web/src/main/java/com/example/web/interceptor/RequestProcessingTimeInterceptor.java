@@ -7,6 +7,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 @Slf4j
 @Order(1)
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RequestProcessingTimeInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("Request url: " + request.getRequestURL().toString() + "\ncurrent time: " + System.currentTimeMillis() + "\n");
+        log.info("Request url: " + request.getRequestURL().toString() + "\ncurrent time: " + new Date() + "\n");
         return true;
     }
 
