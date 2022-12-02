@@ -14,7 +14,7 @@ public class XxlJobConfig {
     public XxlJobSpringExecutor xxlJobExecutor(@Value("${xxl.job.executor.ip:}") String ip,
                                                @Value("${xxl.job.admin.address:}") String adminAddresses,
                                                @Value("${xxl.job.executor.port:}") int port,
-                                               @Value("${xxl.job.executor.appname:}") String accessToken,
+                                               @Value("${xxl.job.accessToken:}") String accessToken,
                                                @Value("${xxl.job.executor.logpath:}") String logPath,
                                                @Value("${xxl.job.executor.logretentiondays:}") int logRetentionDays,
                                                @Value("${xxl.job.executor.appname:}") String appname) {
@@ -26,7 +26,7 @@ public class XxlJobConfig {
         executor.setAccessToken(accessToken);
         executor.setLogPath(logPath);
         executor.setLogRetentionDays(logRetentionDays);
-
+        log.info("access token is:{}", accessToken);
         return executor;
     }
 }

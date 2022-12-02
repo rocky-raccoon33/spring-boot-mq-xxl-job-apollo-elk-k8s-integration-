@@ -1,4 +1,4 @@
-package com.example.lib.xxl;
+package com.example.lib.common;
 
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.annotation.XxlJob;

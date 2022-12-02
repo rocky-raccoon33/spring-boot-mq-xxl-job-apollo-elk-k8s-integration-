@@ -10,18 +10,18 @@ spring:
   jpa:
     show-sql: true
     properties:
-      hibernate:`
+      hibernate:
         show-sql: true
     hibernate:
       ddl-auto: update
   rabbitmq:
-    
+
 
 xxl:
   job:
     admin:
       address:
-    accessToken:
+    accessToken: default_token
     executor:
       ip:
       logpath:
@@ -41,5 +41,6 @@ apollo:
     namespaces: application,application.yml
     eagerLoad:
       enabled: false
+
   
   
