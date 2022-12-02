@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: sre
+  name: xxl-job
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xxl-job
+  template:
+    metadata:
+      labels:
+        app: xxl-job
+    spec:
+      containers:
+        - name: xxl-job
+          image: xuxueli/xxl-job-admin:2.3.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://xxl-db:3306/xxl_job?allowPublicKeyRetrieval=true&Unicode=true&characterEncoding=UTF-8&useSSL=false
+            - name: SPRING_DATASOURCE_USERNAME
+              value: maurice
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: martha
+            - name: XXL_JOB_ACCESSTOKEN
+              value:
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: sre
+  name: xxl-job
+  labels:
+    app: xxl-job
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080
+  selector:
+    app: xxl-job
