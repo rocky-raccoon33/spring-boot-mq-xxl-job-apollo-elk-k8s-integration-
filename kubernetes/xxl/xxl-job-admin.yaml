@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: sre
+  namespace: alpha
   name: xxl-job
 spec:
   replicas: 1
@@ -27,13 +27,13 @@ spec:
             - name: SPRING_DATASOURCE_PASSWORD
               value: martha
             - name: XXL_JOB_ACCESSTOKEN
-              value:
+              value: ""
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: sre
+  namespace: alpha
   name: xxl-job
   labels:
     app: xxl-job

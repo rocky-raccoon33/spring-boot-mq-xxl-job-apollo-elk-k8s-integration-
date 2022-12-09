@@ -11,7 +11,7 @@ ENV APOLLO_RUN_MODE "Docker"
 ENV VERSION 2.0.1
 ENV SERVER_PORT 8090
 
-RUN   apt install  unzip curl bash tzdata \
+RUN apt install  unzip curl bash tzdata \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone
 

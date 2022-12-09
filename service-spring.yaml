@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  namespace: sre
+  namespace: alpha
   name: spring-app-initdb-pv-claim
   labels:
     app: spring-app-db
@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: sre
+  namespace: alpha
   name: spring-app-db
   labels:
     app: spring-app-db
@@ -31,7 +31,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: sre
+  namespace: alpha
   name: spring-app-db
 spec:
   selector:
@@ -64,7 +64,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: sre
+  namespace: alpha
   name: spring-app-init-sql
 data:
   initdb.sql: |
@@ -85,7 +85,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: springboot-svc
-  namespace: sre
+  namespace: alpha
 spec:
   selector:
     app: spring-app
@@ -101,7 +101,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: spring-app
-  namespace: sre
+  namespace: alpha
 spec:
   selector:
     matchLabels:
@@ -127,7 +127,17 @@ spec:
             - name: APOLLO_META
               value: 'http://service-apollo-meta-server-dev:8080' 
             - name: XXL_JOB_ACCESSTOKEN
-              value:
+              value: ''
+            - name: RABBITMQ_HOST
+              value: rabbitmq
+            - name: RABBITMQ_PORT
+              value: '5672'
+            - name: RABBITMQ_VIRTUALHOST
+              value: "/"
+            - name: RABBITMQ_USERNAME
+              value: default_user_GNsAKcCpsAsOWi0-RZV
+            - name: RABBITMQ_PASSWORD
+              value: N7WsrDgOfYI6R29emNNjDNAGqxYkJ-1C
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

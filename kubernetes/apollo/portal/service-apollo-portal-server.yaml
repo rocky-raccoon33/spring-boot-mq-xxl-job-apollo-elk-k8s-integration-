@@ -18,7 +18,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  namespace: sre
+  namespace: alpha
   name: configmap-apollo-portal-server
 data:
   application-github.properties: |
@@ -28,15 +28,15 @@ data:
     # enabled environments
     apollo.portal.envs=dev
   apollo-env.properties: |
-    dev.meta=http://service-apollo-config-server-dev.sre:8080
-#    fat.meta=http://service-apollo-config-server-fat.sre:8080
-#    uat.meta=http://service-apollo-config-server-uat.sre:8080
-#    pro.meta=http://service-apollo-config-server-prod.sre:8080
+    dev.meta=http://service-apollo-config-server-dev.alpha:8080
+#    fat.meta=http://service-apollo-config-server-fat.alpha:8080
+#    uat.meta=http://service-apollo-config-server-uat.alpha:8080
+#    pro.meta=http://service-apollo-config-server-prod.alpha:8080
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  namespace: sre
+  namespace: alpha
   name: service-apollo-portal-server
   labels:
     app: service-apollo-portal-server
@@ -56,7 +56,7 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  namespace: sre
+  namespace: alpha
   name: deployment-apollo-portal-server
   labels:
     app: deployment-apollo-portal-server
@@ -117,7 +117,7 @@ spec:
           
           env:
             - name: APOLLO_PORTAL_SERVICE_NAME
-              value: "service-apollo-portal-server.sre"
+              value: "service-apollo-portal-server.alpha"
           
           readinessProbe:
             tcpSocket:

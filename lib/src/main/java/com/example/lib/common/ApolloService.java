@@ -17,7 +17,7 @@ public class ApolloService {
         for (String key : event.changedKeys()) {
             try {
                 ConfigChange change = event.getChange(key);
-                log.info("key:{},oldValue:{},newValue:{}", key, change.getOldValue(), change.getNewValue());
+                log.info("key:{} oldValue:{} newValue:{}", key, change.getOldValue(), change.getNewValue());
             } catch (Throwable tr) {
                 log.warn("apollo config listener:", tr);
             }
