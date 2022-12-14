@@ -1,10 +1,10 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  namespace: alpha
+  namespace: kube-app
   name: spring-app-initdb-pv-claim
   labels:
-    app: spring-app-db
+    app: spring-db
 spec:
   storageClassName: manual
   accessModes:
@@ -17,32 +17,32 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: alpha
-  name: spring-app-db
+  namespace: kube-app
+  name: spring-db
   labels:
-    app: spring-app-db
+    app: spring-db
 spec:
   ports:
     - port: 3306
   selector:
-    app: spring-app-db
+    app: spring-db
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: alpha
-  name: spring-app-db
+  namespace: kube-app
+  name: spring-db
 spec:
   selector:
     matchLabels:
-      app: spring-app-db
+      app: spring-db
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: spring-app-db
+        app: spring-db
     spec:
       containers:
         - name: mysql
@@ -64,15 +64,15 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: alpha
+  namespace: kube-app
   name: spring-app-init-sql
 data:
   initdb.sql: |
     CREATE USER 'maurice'@'%' IDENTIFIED BY 'martha';
     GRANT ALL PRIVILEGES ON *.* TO 'maurice'@'%' WITH GRANT OPTION;
     flush privileges;
-    CREATE database alpha;
-    use alpha;
+    CREATE database kube_app;
+    use kube_app;
     DROP TABLE IF EXISTS `user`;
     
     CREATE TABLE user(
@@ -85,7 +85,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: springboot-svc
-  namespace: alpha
+  namespace: kube-app
 spec:
   selector:
     app: spring-app
@@ -101,7 +101,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: spring-app
-  namespace: alpha
+  namespace: kube-app
 spec:
   selector:
     matchLabels:
@@ -114,10 +114,10 @@ spec:
     spec:
       containers:
         - name: spring-app
-          image: bugfans/spring-app:0.02
+          image: spring-app:v1
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://spring-app-db:3306/alpha
+              value: jdbc:mysql://spring-db:3306/kube_app
             - name: SPRING_DATASOURCE_USERNAME
               value: maurice
             - name: SPRING_DATASOURCE_PASSWORD
@@ -138,6 +138,6 @@ spec:
               value: default_user_GNsAKcCpsAsOWi0-RZV
             - name: RABBITMQ_PASSWORD
               value: N7WsrDgOfYI6R29emNNjDNAGqxYkJ-1C
-          imagePullPolicy: Always
+          imagePullPolicy: Never
           ports:
             - containerPort: 8080

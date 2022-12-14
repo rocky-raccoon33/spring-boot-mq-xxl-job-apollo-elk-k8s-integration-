@@ -1,5 +1,6 @@
 package com.example.lib.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +24,7 @@ public class WebMvcConfig {
     public WebMvcConfigurer webMvcConfigurer(@Autowired HandlerInterceptor[] interceptors) {
         return new WebMvcConfigurer() {
             @Override
-            public void addInterceptors(InterceptorRegistry registry) {
+            public void addInterceptors(@NotNull InterceptorRegistry registry) {
                 for (var interceptor : interceptors) {
                     registry.addInterceptor(interceptor);
                 }

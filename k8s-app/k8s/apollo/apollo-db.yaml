@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  namespace: alpha
+  namespace: kube-app
   name: apollo-initdb-pv-claim
   labels:
     app: apollo-db
@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: alpha
+  namespace: kube-app
   name: apollo-db
   labels:
     app: apollo-db
@@ -31,7 +31,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: alpha
+  namespace: kube-app
   name: apollo-db
 spec:
   selector:
@@ -64,7 +64,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: alpha
+  namespace: kube-app
   name: apollo-init-sql
 data:
   initdb.sql: |
