@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  namespace: kube-app
+  namespace: spring-boot
   name: spring-app-initdb-pv-claim
   labels:
     app: spring-db
@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: kube-app
+  namespace: spring-boot
   name: spring-db
   labels:
     app: spring-db
@@ -31,7 +31,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: kube-app
+  namespace: spring-boot
   name: spring-db
 spec:
   selector:
@@ -64,7 +64,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: kube-app
+  namespace: spring-boot
   name: spring-app-init-sql
 data:
   initdb.sql: |
@@ -85,7 +85,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: springboot-svc
-  namespace: kube-app
+  namespace: spring-boot
 spec:
   selector:
     app: spring-app
@@ -101,7 +101,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: spring-app
-  namespace: kube-app
+  namespace: spring-boot
 spec:
   selector:
     matchLabels:
@@ -117,7 +117,7 @@ spec:
           image: spring-app:v1
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://spring-db:3306/kube_app
+              value: 'jdbc:mysql://spring-db.database.svc.cluster.local:3306/kube_app'
             - name: SPRING_DATASOURCE_USERNAME
               value: maurice
             - name: SPRING_DATASOURCE_PASSWORD
@@ -128,16 +128,19 @@ spec:
               value: 'http://service-apollo-meta-server-dev:8080' 
             - name: XXL_JOB_ACCESSTOKEN
               value: ''
-            - name: RABBITMQ_HOST
-              value: rabbitmq
-            - name: RABBITMQ_PORT
+            - name: SPRING_RABBITMQ_HOST
+              value: 'rabbitmq.messaging.svc.cluster.local'
+            - name: SPRING_RABBITMQ_PORT
               value: '5672'
-            - name: RABBITMQ_VIRTUALHOST
-              value: "/"
-            - name: RABBITMQ_USERNAME
-              value: default_user_GNsAKcCpsAsOWi0-RZV
-            - name: RABBITMQ_PASSWORD
-              value: N7WsrDgOfYI6R29emNNjDNAGqxYkJ-1C
+            - name: SPRING_RABBITMQ_VIRTUALHOST
+              value: '/'
+            - name: SPRING_RABBITMQ_USERNAME
+              value: 'default_user_-tTUjHab_xSnXgAs2-U'
+            - name: SPRING_RABBITMQ_PASSWORD
+              value: 'PAjGrnqjc5jZqBBrxxUNiTUDmcj3MrHF'
+            - name: OPENTRACING_JAEGER_HTTPSENDER_URL
+              value: ''
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
+              

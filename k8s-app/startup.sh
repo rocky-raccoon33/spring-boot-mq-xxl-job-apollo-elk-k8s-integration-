@@ -7,7 +7,6 @@ parent_path=$(
 cd "$parent_path"
 
 projectVersion=v1
-app=spring-app
 array=(elasticsearch kibana logstash rabbitmq kafka jaeger apollo xxl-job sql-admin)
 
 function note() {
@@ -36,37 +35,35 @@ if [[ $@ == *"build-app"* ]]; then
 fi
 
 if [[ $1 == *"start-app"* ]]; then
-  create_ns "kube_app"
   cd ./k8s/spring-boot
   kubectl apply -f .
   cd -
 fi
 
 if [[ $1 == *"start"* ]]; then
-  create_ns "kube-app"
   for project in ${@:2}; do
     if [[ " ${array[*]} " =~ " ${project} " ]]; then
       case $project in
       "rabbitmq")
+        create_ns "rabbitmq"
         kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
         cd ./k8s/${project}
         kubectl apply -f .
-        username="$(kubectl get secret rabbitmq-default-user -n kube-app -o jsonpath='{.data.username}' | base64 --decode)"
-        password="$(kubectl get secret rabbitmq-default-user -n kube-app -o jsonpath='{.data.password}' | base64 --decode)"
+        username="$(kubectl get secret rabbitmq-default-user -n rabbitmq -o jsonpath='{.data.username}' | base64 --decode)"
+        password="$(kubectl get secret rabbitmq-default-user -n rabbitmq -o jsonpath='{.data.password}' | base64 --decode)"
         echo "username: $username"
         echo "password: $password"
         cd -
         ;;
       "kafka")
-        create_ns "kafka"
         kubectl create -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
         kubectl apply -f https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml -n kube-app
         kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s -n kafka
         ;;
-      "jaeger")
-        create_ns "observability"
-        kubectl create -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.39.0/jaeger-operator.yaml -n observability
-        ;;
+#      "jaeger")
+#        kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.1/cert-manager.yaml
+#        kubectl create -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.39.0/jaeger-operator.yaml -n observability
+#        ;;
 
       *)
         cd $project
