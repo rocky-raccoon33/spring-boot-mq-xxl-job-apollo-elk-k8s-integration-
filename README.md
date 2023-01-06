@@ -1,10 +1,10 @@
-# spring-boot-mq-apollo-elk-kubernetes-integration
+# spring-boot mq/xxl-job/apollo/elk k8s integration
 
 go into - directory
 
 > `./build.sh build`
 
-and then
+and run
 
 > `./build.sh start`
 
